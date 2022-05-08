@@ -4,4 +4,5 @@
     <string name="hint_hour">Hours</string>
     <string name="hint_minute">Minutes</string>
     <string name="colon">:</string>
+    <string name="timer_config_button">Start Timer</string>
 </resources>
