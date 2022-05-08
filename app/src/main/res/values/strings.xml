@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WorkTimer</string>
+    <string name="first_description">Enter Working hours and minutes.</string>
+    <string name="hint_hour">Hours</string>
+    <string name="hint_minute">Minutes</string>
+    <string name="colon">:</string>
 </resources>
