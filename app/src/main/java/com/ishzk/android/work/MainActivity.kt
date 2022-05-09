@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         val timerStartButton: Button = findViewById(R.id.startTimerButton)
         timerStartButton.setOnClickListener{
-            val (hours, minutes) = getWorkingTime()
+            val (hours, minutes) = getWorkingTime() ?: return@setOnClickListener
             val i = Intent(application, TimerActivity::class.java)
             i.putExtra("hours", hours)
             i.putExtra("minutes", minutes)
@@ -27,9 +27,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getWorkingTime(): Pair<Int, Int>{
-        val hours = hourText.text.toString().toInt()
-        val minutes = minuteText.text.toString().toInt()
+    private fun getWorkingTime(): Pair<Int, Int>?{
+        val hoursString = hourText.text.toString()
+        val minutesString = minuteText.text.toString()
+        if(hoursString.isEmpty() || minutesString.isEmpty()) return null
+
+        val hours = hoursString.toInt()
+        val minutes = minutesString.toInt()
         Log.v(TAG, "hours:$hours")
         Log.v(TAG, "minutes:$minutes")
 
