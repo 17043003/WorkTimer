@@ -50,14 +50,23 @@
 
     <TextView
         android:id="@+id/endTimeText"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="44dp"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/startButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/currentTimeText"
+        tools:text=" / 14:45" />
+
+    <TextView
+        android:id="@+id/currentTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="End time: \n12:34 / 14:45" />
+        app:layout_constraintTop_toTopOf="@+id/endTimeText"
+        tools:text="12:34" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

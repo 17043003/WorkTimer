@@ -35,16 +35,16 @@ class TimerActivity: AppCompatActivity() {
         val leftTimeView: TextView = findViewById(R.id.leftTimeText)
         Log.v(TAG, "$hours:$minutes")
 
+        val currentTimeView: TextView = findViewById(R.id.currentTimeText)
+
         val canvasView: TimerCanvasView = findViewById(R.id.canvasView)
-        val animation = AnimationDraw(canvasView, leftTimeView)
+        val animation = AnimationDraw(canvasView, leftTimeView, currentTimeView)
         animation.duration = (hours * 60 + minutes) * 60 * 1000L
         canvasView.startAnimation(animation)
 
-        val endTimeView: TextView = findViewById(R.id.endTimeText)
-        val currentTime = Date()
-        currentTime.time += animation.duration
-        val endHourMinute = SimpleDateFormat("HH:mm").format(currentTime)
-        endTimeView.text = "End time: \n $endHourMinute"
+        val endTimeText: TextView = findViewById(R.id.endTimeText)
+        val endTime = Date().apply { this.time += animation.duration }
+        endTimeText.text = SimpleDateFormat(" / HH:mm:ss").format(endTime)
     }
 
     class TimerCanvasView: View{
@@ -87,10 +87,14 @@ class TimerActivity: AppCompatActivity() {
 
 class AnimationDraw(
     private val timerView: TimerActivity.TimerCanvasView,
-    private val leftTextView: TextView
+    private val leftTextView: TextView,
+    private val currentTimeView: TextView,
 ): Animation() {
     override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
         super.applyTransformation(interpolatedTime, t)
+
+        val currentHourMinuteSecond = SimpleDateFormat("HH:mm:ss").format(Date())
+        currentTimeView.text = currentHourMinuteSecond
 
         val leftSeconds = (duration -  interpolatedTime * duration).toInt() / 1000
         leftTextView.text = "Left Time : ${leftSeconds / 60} : ${leftSeconds % 60}"
