@@ -17,7 +17,9 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import java.text.SimpleDateFormat
 import java.time.format.DecimalStyle
+import java.util.*
 
 private const val TAG = "TimerActivity"
 
@@ -37,6 +39,12 @@ class TimerActivity: AppCompatActivity() {
         val animation = AnimationDraw(canvasView, leftTimeView)
         animation.duration = (hours * 60 + minutes) * 60 * 1000L
         canvasView.startAnimation(animation)
+
+        val endTimeView: TextView = findViewById(R.id.endTimeText)
+        val currentTime = Date()
+        currentTime.time += animation.duration
+        val endHourMinute = SimpleDateFormat("HH:mm").format(currentTime)
+        endTimeView.text = "End time: \n $endHourMinute"
     }
 
     class TimerCanvasView: View{
