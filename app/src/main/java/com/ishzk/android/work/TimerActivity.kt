@@ -6,11 +6,18 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import java.time.format.DecimalStyle
 
 private const val TAG = "TimerActivity"
 
@@ -18,22 +25,27 @@ class TimerActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val canvasView = TimerCanvasView(applicationContext)
-        setContentView(canvasView)
+        setContentView(R.layout.activity_timer)
 
         val datas = intent.extras
         val hours: Int = datas?.get("hours").toString().toInt()
         val minutes: Int = datas?.get("minutes").toString().toInt()
+        val leftTimeView: TextView = findViewById(R.id.leftTimeText)
         Log.v(TAG, "$hours:$minutes")
 
-        val animation = AnimationDraw(canvasView)
+        val canvasView: TimerCanvasView = findViewById(R.id.canvasView)
+        val animation = AnimationDraw(canvasView, leftTimeView)
         animation.duration = (hours * 60 + minutes) * 60 * 1000L
         canvasView.startAnimation(animation)
     }
 
-    class TimerCanvasView(context: Context): View(context){
+    class TimerCanvasView: View{
         private val paint: Paint by lazy { Paint() }
         var arcRate: Float = 0.0f
+
+        constructor(context: Context): super(context)
+        constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet)
+        constructor(context: Context, attributeSet: AttributeSet, defStyle: Int): super(context, attributeSet, defStyle)
 
         override fun onDraw(canvas: Canvas?) {
             super.onDraw(canvas)
@@ -65,14 +77,15 @@ class TimerActivity: AppCompatActivity() {
     }
 }
 
-class AnimationDraw: Animation {
-    private var timerView: TimerActivity.TimerCanvasView
-    constructor(view: TimerActivity.TimerCanvasView){
-        timerView = view
-    }
+class AnimationDraw(
+    private val timerView: TimerActivity.TimerCanvasView,
+    private val leftTextView: TextView
+): Animation() {
     override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
         super.applyTransformation(interpolatedTime, t)
 
+        val leftSeconds = (duration -  interpolatedTime * duration).toInt() / 1000
+        leftTextView.text = "Left Time : ${leftSeconds / 60} : ${leftSeconds % 60}"
         timerView.arcRate = interpolatedTime
         timerView.requestLayout()
     }
