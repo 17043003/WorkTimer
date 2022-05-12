@@ -35,6 +35,9 @@ class TimerActivity: AppCompatActivity() {
         val leftTimeView: TextView = findViewById(R.id.leftTimeText)
         Log.v(TAG, "$hours:$minutes")
 
+        val purposeTextView: TextView = findViewById(R.id.purposeDisplay)
+        purposeTextView.text = datas?.get("purpose").toString()
+
         val currentTimeView: TextView = findViewById(R.id.currentTimeText)
 
         val canvasView: TimerCanvasView = findViewById(R.id.canvasView)

@@ -7,4 +7,5 @@
     <string name="timer_config_button">Start Timer</string>
     <string name="start_button">Start</string>
     <string name="stop_button">Stop</string>
+    <string name="purpose_text">working reason</string>
 </resources>
