@@ -17,44 +17,21 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/hourTextNumber"
-        android:layout_width="64dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="114dp"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:hint="@string/hint_hour"
-        android:inputType="number"
-        android:maxLength="2"
-        android:textAlignment="center"
+    <NumberPicker
+        android:id="@+id/hourPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
 
-    <EditText
-        android:id="@+id/minuteTextNumber"
-        android:layout_width="64dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="114dp"
-        android:ems="10"
-        android:hint="@string/hint_minute"
-        android:inputType="number"
-        android:maxLength="2"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/hourTextNumber" />
-
-    <TextView
-        android:id="@+id/colonText"
+    <NumberPicker
+        android:id="@+id/minutePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/colon"
-        android:textAlignment="viewStart"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/minuteTextNumber"
-        app:layout_constraintStart_toEndOf="@+id/hourTextNumber"
-        app:layout_constraintTop_toTopOf="@+id/hourTextNumber" />
+        app:layout_constraintStart_toEndOf="@+id/hourPicker"
+        app:layout_constraintTop_toTopOf="@+id/hourPicker" />
 
     <Button
         android:id="@+id/startTimerButton"
@@ -64,6 +41,6 @@
         android:text="@string/timer_config_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hourTextNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/hourPicker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
