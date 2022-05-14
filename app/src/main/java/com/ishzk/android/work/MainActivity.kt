@@ -4,15 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.NumberPicker
-import android.widget.TextView
+import android.widget.*
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
     private val hourPicker: NumberPicker by lazy { findViewById(R.id.hourPicker) }
     private val minutePicker: NumberPicker by lazy { findViewById(R.id.minutePicker) }
+    private val categorySpin: Spinner by lazy { findViewById(R.id.categorySpin) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,14 +21,23 @@ class MainActivity : AppCompatActivity() {
         timerStartButton.setOnClickListener{
             val (hours, minutes) = getWorkingTime()
             val purpose = getPurpose()
+
+            val category = categorySpin.selectedItem.toString()
             val i = Intent(application, TimerActivity::class.java)
             i.putExtra("hours", hours)
             i.putExtra("minutes", minutes)
+            i.putExtra("category", category)
             i.putExtra("purpose", purpose)
             startActivity(i)
         }
 
         initNumberPicker()
+
+        categorySpin.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item).apply {
+            add("Study")
+            add("Practice")
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
     }
 
     private fun getWorkingTime(): Pair<Int, Int>{

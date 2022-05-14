@@ -8,17 +8,15 @@ import android.graphics.RectF
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.ishzk.android.work.Model.Achievement
+import com.ishzk.android.work.Repository.RealmRepository
 import java.text.SimpleDateFormat
-import java.time.format.DecimalStyle
 import java.util.*
 
 private const val TAG = "TimerActivity"
@@ -36,7 +34,8 @@ class TimerActivity: AppCompatActivity() {
         Log.v(TAG, "$hours:$minutes")
 
         val purposeTextView: TextView = findViewById(R.id.purposeDisplay)
-        purposeTextView.text = datas?.get("purpose").toString()
+        val purpose = datas?.get("purpose").toString()
+        purposeTextView.text = purpose
 
         val currentTimeView: TextView = findViewById(R.id.currentTimeText)
 
@@ -48,6 +47,19 @@ class TimerActivity: AppCompatActivity() {
         val endTimeText: TextView = findViewById(R.id.endTimeText)
         val endTime = Date().apply { this.time += animation.duration }
         endTimeText.text = SimpleDateFormat(" / HH:mm:ss").format(endTime)
+
+        val saveButton: Button = findViewById(R.id.saveButton)
+        saveButton.setOnClickListener {
+            val dbConnection = RealmRepository
+            dbConnection.insert(Achievement().apply {
+                id = 1
+                category = datas?.get("category").toString()
+                description = purpose
+                actualTime = Date().time.apply { hours + minutes }
+                scheduledTime = endTime.time
+            })
+            Log.v(TAG, "saved Achievement!")
+        }
     }
 
     class TimerCanvasView: View{

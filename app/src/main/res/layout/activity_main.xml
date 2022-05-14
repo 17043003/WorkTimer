@@ -58,4 +58,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/categorySpin"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="@string/WorkingCategory"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/purposeText"
+        app:layout_constraintStart_toStartOf="@+id/purposeText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
