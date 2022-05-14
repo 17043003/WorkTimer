@@ -3,6 +3,7 @@ package com.ishzk.android.work.Repository
 import com.ishzk.android.work.Model.Achievement
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.query
 
 object RealmRepository: Repository {
     private val connection by lazy { connect() }
@@ -16,5 +17,9 @@ object RealmRepository: Repository {
         connection.writeBlocking {
             copyToRealm(item)
         }
+    }
+
+    override fun selectAll(): List<Achievement> {
+        return connection.query<Achievement>().find()
     }
 }
