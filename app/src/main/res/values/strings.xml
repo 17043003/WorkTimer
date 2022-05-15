@@ -8,4 +8,5 @@
     <string name="save_button">Save</string>
     <string name="purpose_text">working reason</string>
     <string name="WorkingCategory">Working category</string>
+    <string name="menu_results">Results</string>
 </resources>
