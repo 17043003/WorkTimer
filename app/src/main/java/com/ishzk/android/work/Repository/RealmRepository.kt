@@ -22,4 +22,8 @@ object RealmRepository: Repository {
     override fun selectAll(): List<Achievement> {
         return connection.query<Achievement>().find()
     }
+
+    override fun select(id: Int): Achievement {
+        return connection.query<Achievement>("id == $0", "$id").find().first()
+    }
 }
