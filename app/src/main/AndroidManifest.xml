@@ -21,6 +21,9 @@
         <activity
             android:name=".TimerActivity">
         </activity>
+        <activity
+            android:name=".AchievementsActivity">
+        </activity>
     </application>
 
 </manifest>

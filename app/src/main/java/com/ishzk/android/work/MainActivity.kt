@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.menu_results -> {
+                startActivity(Intent(application, AchievementsActivity::class.java))
                 return true
             }
         }
