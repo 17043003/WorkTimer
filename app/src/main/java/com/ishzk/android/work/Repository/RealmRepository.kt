@@ -7,7 +7,7 @@ import io.realm.query
 
 object RealmRepository: Repository {
     private val connection by lazy { connect() }
-    fun connect(): Realm{
+    private fun connect(): Realm{
         val config = RealmConfiguration.Builder(schema = setOf(Achievement::class))
             .build()
         return Realm.open(config)
