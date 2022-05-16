@@ -17,12 +17,12 @@ class AchievementsActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_achieve_list)
 
-        val list: List<Achievement> = RealmRepository.selectAll()
         val recyclerView: RecyclerView = findViewById(R.id.achievement_list)
         val layout = LinearLayoutManager(this@AchievementsActivity)
         recyclerView.layoutManager = layout
 
-        val items: MutableList<MutableMap<String, Any>> = mutableListOf(mutableMapOf("detail" to "russian", "time" to 0L), mutableMapOf("detail" to "english", "time" to 1000L))
+        val list: List<Achievement> = RealmRepository.selectAll()
+        val items: MutableList<MutableMap<String, Any>> = list.map { mutableMapOf<String, Any>("detail" to it.description, "time" to it.actualTime) }.toMutableList()
         val adapter = AchievementListAdapter(items)
         recyclerView.adapter = adapter
     }
@@ -31,8 +31,7 @@ class AchievementsActivity: AppCompatActivity() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AchieveViewHolder {
             val inflater = LayoutInflater.from(this@AchievementsActivity)
             val view = inflater.inflate(R.layout.row, parent, false)
-            val holder = AchieveViewHolder(view)
-            return holder
+            return AchieveViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: AchieveViewHolder, position: Int) {
