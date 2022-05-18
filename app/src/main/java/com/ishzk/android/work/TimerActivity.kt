@@ -13,6 +13,7 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ishzk.android.work.Model.Achievement
 import com.ishzk.android.work.Repository.RealmRepository
@@ -59,6 +60,9 @@ class TimerActivity: AppCompatActivity() {
                 scheduledTime = endTime.time
             })
             Log.v(TAG, "saved Achievement!")
+
+            animation.cancel()
+            Toast.makeText(this@TimerActivity, "Finished!", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -114,6 +118,11 @@ class AnimationDraw(
         val leftSeconds = (duration -  interpolatedTime * duration).toInt() / 1000
         leftTextView.text = "Left Time : ${leftSeconds / 60} : ${leftSeconds % 60}"
         timerView.arcRate = interpolatedTime
+
+        if(hasEnded()) {
+            leftTextView.text = "Left Time : 00 : 00"
+            timerView.arcRate = 1.0f
+        }
         timerView.requestLayout()
     }
 }
