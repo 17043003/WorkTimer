@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ishzk.android.work.Model.Achievement
@@ -25,6 +26,9 @@ class AchievementsActivity: AppCompatActivity() {
         val items: MutableList<MutableMap<String, Any>> = list.map { mutableMapOf<String, Any>("detail" to it.description, "time" to it.actualTime) }.toMutableList()
         val adapter = AchievementListAdapter(items)
         recyclerView.adapter = adapter
+
+        val decorator = DividerItemDecoration(this@AchievementsActivity, layout.orientation)
+        recyclerView.addItemDecoration(decorator)
     }
 
     private inner class AchievementListAdapter(private val listData: MutableList<MutableMap<String, Any>>): RecyclerView.Adapter<AchieveViewHolder>(){
