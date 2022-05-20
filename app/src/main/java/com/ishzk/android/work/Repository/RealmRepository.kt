@@ -26,4 +26,8 @@ object RealmRepository: Repository {
     override fun select(id: Int): Achievement {
         return connection.query<Achievement>("id == $0", "$id").find().first()
     }
+
+    fun selectMaxID(): Int {
+        return connection.query<Achievement>().max("id", Int::class).find() ?: 0
+    }
 }

@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ishzk.android.work.Model.Achievement
 import com.ishzk.android.work.Repository.RealmRepository
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -52,8 +53,9 @@ class TimerActivity: AppCompatActivity() {
         val saveButton: Button = findViewById(R.id.saveButton)
         saveButton.setOnClickListener {
             val dbConnection = RealmRepository
+            val newID = dbConnection.selectMaxID() + 1
             dbConnection.insert(Achievement().apply {
-                id = 1
+                id = newID
                 category = datas?.get("category").toString()
                 description = purpose
                 actualTime = Date().time.apply { hours + minutes }
