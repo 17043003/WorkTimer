@@ -54,14 +54,17 @@ class TimerActivity: AppCompatActivity() {
         saveButton.setOnClickListener {
             val dbConnection = RealmRepository
             val newID = dbConnection.selectMaxID() + 1
+            val workedTime = (hours * 60 + minutes) * 60 * 1000L - (endTime.time - Date().time)
             dbConnection.insert(Achievement().apply {
                 id = newID
                 category = datas?.get("category").toString()
                 description = purpose
-                actualTime = Date().time.apply { hours + minutes }
+                actualTime = workedTime
                 scheduledTime = endTime.time
             })
             Log.v(TAG, "saved Achievement!")
+            Log.v(TAG, "time:${workedTime}")
+
 
             animation.cancel()
             Toast.makeText(this@TimerActivity, "Finished!", Toast.LENGTH_SHORT).show()
