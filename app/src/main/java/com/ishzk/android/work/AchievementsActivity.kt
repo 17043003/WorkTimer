@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,16 +23,15 @@ class AchievementsActivity: AppCompatActivity() {
         val layout = LinearLayoutManager(this@AchievementsActivity)
         recyclerView.layoutManager = layout
 
-        val list: List<Achievement> = RealmRepository.selectAll()
-        val items: MutableList<MutableMap<String, Any>> = list.map { mutableMapOf<String, Any>("detail" to it.description, "time" to it.actualTime) }.toMutableList()
-        val adapter = AchievementListAdapter(items)
+        val list: MutableList<Achievement> = RealmRepository.selectAll().toMutableList()
+        val adapter = AchievementListAdapter(list)
         recyclerView.adapter = adapter
 
         val decorator = DividerItemDecoration(this@AchievementsActivity, layout.orientation)
         recyclerView.addItemDecoration(decorator)
     }
 
-    private inner class AchievementListAdapter(private val listData: MutableList<MutableMap<String, Any>>): RecyclerView.Adapter<AchieveViewHolder>(){
+    private inner class AchievementListAdapter(private val listData: MutableList<Achievement>): RecyclerView.Adapter<AchieveViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AchieveViewHolder {
             val inflater = LayoutInflater.from(this@AchievementsActivity)
             val view = inflater.inflate(R.layout.row, parent, false)
@@ -40,21 +40,26 @@ class AchievementsActivity: AppCompatActivity() {
 
         override fun onBindViewHolder(holder: AchieveViewHolder, position: Int) {
             val item = listData[position]
-            val detail = item["detail"] as String
-            val timeNum = item["time"] as Long
+            val detail = item.description
+            val timeNum = item.actualTime
             val timeString = Date(timeNum).toString()
 
             holder.detailView.text = detail
             holder.timeView.text = timeString
+            holder.itemView.setOnClickListener(ItemClickListener(listData[position]))
         }
 
         override fun getItemCount(): Int {
             return listData.size
         }
     }
-}
 
-data class RowData(private val detail: String, private val time: Long)
+    private inner class ItemClickListener(private val data: Achievement): View.OnClickListener {
+        override fun onClick(view: View) {
+            Toast.makeText(this@AchievementsActivity, "${data.id}:${data.description}", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
 
 class AchieveViewHolder(view: View): RecyclerView.ViewHolder(view) {
     val detailView: TextView = view.findViewById(R.id.detail)
