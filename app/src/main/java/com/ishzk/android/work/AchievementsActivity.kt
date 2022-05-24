@@ -41,8 +41,8 @@ class AchievementsActivity: AppCompatActivity() {
         override fun onBindViewHolder(holder: AchieveViewHolder, position: Int) {
             val item = listData[position]
             val detail = item.description
-            val timeNum = item.actualTime
-            val timeString = Date(timeNum).toString()
+            val timeNum = item.actualTime / 1000
+            val timeString = "${timeNum / 3600}hours, ${(timeNum % 3600) / 60 }minutes."
 
             holder.detailView.text = detail
             holder.timeView.text = timeString
